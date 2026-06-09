@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model
+model User {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(user)
+  avatarUrl String?  @db.VarChar(255)
+  isActive  Boolean  @default(true)
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  conversations Conversation[]
+  documents     Document[]
+  apiLogs       ApiLog[]
+
+  @@index([email])
+  @@index([role])
+}
+
+enum Role {
+  user
+  admin
+  super_admin
+}
+
+// Document model
+model Document {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title       String
+  filePath    String   @db.VarChar(500)
+  fileSize    BigInt?
+  fileType    String?  @db.VarChar(50)
+  uploadedBy  String   @db.Uuid
+  status      DocStatus @default(processing)
+  errorMsg    String?
+  chunkCount  Int      @default(0)
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  uploader User              @relation(fields: [uploadedBy], references: [id])
+  chunks   DocumentChunk[]
+
+  @@index([uploadedBy])
+  @@index([status])
+}
+
+enum DocStatus {
+  processing
+  ready
+  error
+}
+
+// Document chunk with vector embedding
+model DocumentChunk {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  docId     String   @db.Uuid
+  content   String   @db.Text
+  chunkIdx  Int
+  embedding Unsupported("vector(768)")?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  document Document @relation(fields: [docId], references: [id], onDelete: Cascade)
+
+  @@index([docId])
+}
+
+// Conversation model
+model Conversation {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId    String   @db.Uuid
+  title     String?
+  summary   String?
+  msgCount  Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+// Message model
+model Message {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  convId     String   @db.Uuid
+  role       MessageRole
+  content    String   @db.Text
+  tokensUsed Int?
+  modelUsed  String?  @db.VarChar(100)
+  sources    Json?
+  feedback   Feedback?
+  createdAt  DateTime @default(now())
+
+  conversation Conversation @relation(fields: [convId], references: [id], onDelete: Cascade)
+
+  @@index([convId])
+  @@index([role])
+}
+
+enum MessageRole {
+  user
+  assistant
+}
+
+enum Feedback {
+  positive
+  negative
+  neutral
+}
+
+// API Logs
+model ApiLog {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  userId     String?  @db.Uuid
+  method     String   @db.VarChar(10)
+  endpoint   String   @db.VarChar(255)
+  statusCode Int?
+  respTime   Int? // milliseconds
+  tokensUsed Int?
+  aiProvider String?  @db.VarChar(50)
+  errorMsg   String?
+  createdAt  DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([endpoint])
+  @@index([createdAt])
+}
+
+// Analytics aggregates
+model AnalyticsAggregate {
+  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  date       DateTime @db.Date
+  metricType String   @db.VarChar(100)
+  metricVal  Json
+  createdAt  DateTime @default(now())
+
+  @@index([date])
+  @@index([metricType])
+}
