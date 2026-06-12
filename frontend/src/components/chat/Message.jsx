@@ -13,13 +13,13 @@ export function Message({ message, isUser }) {
         className={`max-w-xs lg:max-w-md rounded-lg p-4 ${
           isUser
             ? 'bg-blue-600 text-white'
-            : 'bg-gray-200 text-gray-900'
+            : 'bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-gray-100'
         }`}
       >
         {isUser ? (
           <p className="text-sm">{message.content}</p>
         ) : (
-          <div className="text-sm prose prose-sm max-w-none">
+          <div className="text-sm prose prose-sm dark:prose-invert max-w-none">
             <ReactMarkdown
               components={{
                 code: ({ inline, className, children }) => {

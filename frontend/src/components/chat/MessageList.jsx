@@ -29,7 +29,7 @@ export function MessageList({ messages, isLoading }) {
           ))}
           {isLoading && (
             <div className="flex justify-start mb-4">
-              <div className="bg-gray-200 rounded-lg p-4">
+              <div className="bg-gray-200 dark:bg-slate-800 rounded-lg p-4">
                 <Spinner size="sm" />
               </div>
             </div>
