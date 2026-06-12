@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { Button } from '../components/ui/Button.jsx';
+import { Button } from '../ui/Button.jsx';
 
 export function Message({ message, isUser }) {
   const copyToClipboard = () => {

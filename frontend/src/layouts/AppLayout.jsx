@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
-import { Button } from './ui/Button.jsx';
+import { Button } from '../components/ui/Button.jsx';
 import { Link } from 'react-router-dom';
 
 export function AppLayout() {
