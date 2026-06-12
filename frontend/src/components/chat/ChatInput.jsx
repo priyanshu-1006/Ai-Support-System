@@ -1,49 +1,47 @@
-import React, { useState } from 'react';
-import { Send } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Button } from '../ui/Button.jsx';
 
-export default function ChatInput({ onSendMessage, isLoading }) {
-  const [text, setText] = useState('');
+export function ChatInput({ onSend, isLoading, placeholder = 'Type your message...' }) {
+  const [message, setMessage] = useState('');
+  const textareaRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSend = (e) => {
     e.preventDefault();
-    if (text.trim() && !isLoading) {
-      onSendMessage(text);
-      setText('');
+    if (message.trim() && !isLoading) {
+      onSend(message);
+      setMessage('');
+      textareaRef.current?.focus();
     }
   };
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
-      handleSubmit(e);
+      handleSend(e);
     }
   };
 
   return (
-    <div className="p-4 bg-white border-t border-slate-200">
-      <form onSubmit={handleSubmit} className="relative max-w-4xl mx-auto flex items-end gap-2">
-        <div className="relative flex-1 bg-slate-100 rounded-2xl border border-slate-200 focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
-          <textarea
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Type your message here..."
-            className="w-full max-h-32 bg-transparent border-none rounded-2xl py-3 px-4 resize-none focus:outline-none"
-            rows="1"
-            disabled={isLoading}
-          />
-        </div>
-        <button
+    <form onSubmit={handleSend} className="border-t border-gray-200 p-4">
+      <div className="flex gap-3">
+        <textarea
+          ref={textareaRef}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder={placeholder}
+          className="flex-1 border border-gray-300 rounded-lg p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          rows={3}
+          disabled={isLoading}
+        />
+        <Button
           type="submit"
-          disabled={!text.trim() || isLoading}
-          className="p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+          disabled={isLoading || !message.trim()}
+          className="self-end"
         >
-          <Send size={20} />
-        </button>
-      </form>
-      <div className="text-center mt-2 text-xs text-slate-400">
-        AI can make mistakes. Please verify important information.
+          {isLoading ? 'Sending...' : 'Send'}
+        </Button>
       </div>
-    </div>
+    </form>
   );
 }
