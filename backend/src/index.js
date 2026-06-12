@@ -13,10 +13,15 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+import authRoutes from './routes/auth.js';
+
 // Basic Route
 app.get('/', (req, res) => {
     res.json({ message: 'Gryork AI Support System Backend API is running' });
 });
+
+// API Routes
+app.use('/api/auth', authRoutes);
 
 // We can mount our RAG endpoints here later
 // app.post('/api/chat', chatController);
