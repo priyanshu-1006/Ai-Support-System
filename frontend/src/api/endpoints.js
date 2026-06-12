@@ -31,6 +31,9 @@ export const chatAPI = {
 
   feedback: (messageId, feedback, comment = '') =>
     api.post(`/chat/${messageId}/feedback`, { feedback, comment }),
+
+  deleteConversation: (conversationId) =>
+    api.delete(`/chat/${conversationId}`),
 };
 
 // Document endpoints

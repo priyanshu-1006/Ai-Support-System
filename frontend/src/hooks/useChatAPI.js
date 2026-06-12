@@ -47,3 +47,14 @@ export function useMessageFeedback() {
     },
   });
 }
+
+export function useDeleteConversation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (conversationId) => chatAPI.deleteConversation(conversationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['chatHistory'] });
+    },
+  });
+}

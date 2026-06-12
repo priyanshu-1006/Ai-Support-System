@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { Button } from '../components/ui/Button.jsx';
@@ -9,6 +9,7 @@ export function AppLayout() {
   const { user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
@@ -18,10 +19,12 @@ export function AppLayout() {
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  const isChatPage = location.pathname.startsWith('/chat');
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-slate-950 transition-colors">
+    <div className={`${isChatPage ? 'h-screen overflow-hidden' : 'min-h-screen'} bg-transparent transition-colors flex flex-col`}>
       {/* Header */}
-      <header className="bg-white dark:bg-slate-900 border-b border-gray-200 dark:border-slate-800 sticky top-0 z-40 transition-colors">
+      <header className="glass-panel border-x-0 border-t-0 sticky top-0 z-40 transition-colors">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-4">
             <button
@@ -79,7 +82,7 @@ export function AppLayout() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-4 space-y-4">
+          <div className="md:hidden border-t border-gray-200 dark:border-slate-800 glass-panel border-x-0 border-b-0 px-4 py-4 space-y-4">
             <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
               Home
             </Link>
@@ -112,7 +115,7 @@ export function AppLayout() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className={`flex-1 flex flex-col min-h-0 ${isChatPage ? '' : 'max-w-7xl mx-auto px-4 py-8 w-full overflow-y-auto'}`}>
         <Outlet />
       </main>
     </div>

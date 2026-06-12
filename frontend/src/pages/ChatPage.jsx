@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useChatHistory, useConversation, useSendMessage } from '../hooks/useChatAPI.js';
+import { useChatHistory, useConversation, useSendMessage, useDeleteConversation } from '../hooks/useChatAPI.js';
 import { ConversationList } from '../components/chat/ConversationList.jsx';
 import { MessageList } from '../components/chat/MessageList.jsx';
 import { ChatInput } from '../components/chat/ChatInput.jsx';
@@ -26,6 +26,9 @@ export function ChatPage() {
 
   // Send message mutation
   const { mutate: sendMessage, isPending: isSending, error: sendError } = useSendMessage();
+
+  // Delete conversation mutation
+  const { mutate: deleteConversation } = useDeleteConversation();
 
   // Update messages when conversation changes
   useEffect(() => {
@@ -78,6 +81,10 @@ export function ChatPage() {
     navigate('/chat');
   };
 
+  const handleDeleteChat = (id) => {
+    deleteConversation(id);
+  };
+
   if (historyLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen dark:bg-slate-950">
@@ -87,7 +94,7 @@ export function ChatPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-73px)] bg-white dark:bg-slate-950 relative overflow-hidden">
+    <div className="flex flex-1 h-full bg-transparent relative overflow-hidden">
       {/* Mobile Sidebar Overlay */}
       {isSidebarOpen && (
         <div 
@@ -110,6 +117,7 @@ export function ChatPage() {
         <ConversationList
           conversations={conversations}
           onNewChat={handleNewChat}
+          onDeleteChat={handleDeleteChat}
           isLoading={historyLoading}
         />
       </div>

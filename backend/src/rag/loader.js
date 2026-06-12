@@ -23,7 +23,7 @@ export async function loadKnowledgeBase(filePath) {
     // 2. Products
     if (Array.isArray(data.products)) {
         for (const product of data.products) {
-            const text = `Product Name: ${product.name}\nCategory: ${product.category}\nPrice: $${product.price}\nWarranty: ${product.warranty_years} years\nDescription: ${product.description}`;
+            const text = `Product ID: ${product.product_id}\nProduct Name: ${product.name}\nCategory: ${product.category}\nPrice: $${product.price}\nWarranty: ${product.warranty_years} years\nDescription: ${product.description}`;
             documents.push(new Document({
                 pageContent: text,
                 metadata: { type: 'product', id: product.product_id, category: product.category, source: filePath }
@@ -34,7 +34,7 @@ export async function loadKnowledgeBase(filePath) {
     // 3. FAQs
     if (Array.isArray(data.faqs)) {
         for (const faq of data.faqs) {
-            const text = `FAQ - Question: ${faq.question}\nAnswer: ${faq.answer}`;
+            const text = `FAQ ID: ${faq.faq_id}\nFAQ - Question: ${faq.question}\nAnswer: ${faq.answer}`;
             documents.push(new Document({
                 pageContent: text,
                 metadata: { type: 'faq', id: faq.faq_id, source: filePath }
@@ -48,7 +48,7 @@ export async function loadKnowledgeBase(filePath) {
             // Assuming policy has 'policy_id', 'title', 'content' or similar
             const title = policy.title || policy.policy_name || 'Policy';
             const content = policy.content || policy.description || policy.policy_content || JSON.stringify(policy);
-            const text = `Policy: ${title}\nDetails: ${content}`;
+            const text = `Policy ID: ${policy.policy_id || policy.id || 'N/A'}\nPolicy: ${title}\nDetails: ${content}`;
             documents.push(new Document({
                 pageContent: text,
                 metadata: { type: 'policy', id: policy.policy_id || policy.id, source: filePath }
@@ -59,7 +59,7 @@ export async function loadKnowledgeBase(filePath) {
     // 5. Troubleshooting
     if (Array.isArray(data.troubleshooting)) {
         for (const ts of data.troubleshooting) {
-            const text = `Troubleshooting Issue: ${ts.issue || ts.problem}\nResolution: ${ts.resolution || ts.solution}`;
+            const text = `Troubleshooting Issue ID: ${ts.ts_id || ts.id || 'N/A'}\nTroubleshooting Issue: ${ts.issue || ts.problem}\nResolution: ${ts.resolution || ts.solution}`;
             documents.push(new Document({
                 pageContent: text,
                 metadata: { type: 'troubleshooting', id: ts.ts_id || ts.id, source: filePath }
@@ -70,7 +70,7 @@ export async function loadKnowledgeBase(filePath) {
     // 6. Support Tickets
     if (Array.isArray(data.support_tickets)) {
         for (const ticket of data.support_tickets) {
-            const text = `Past Support Ticket - Issue: ${ticket.issue || ticket.description}\nResolution: ${ticket.resolution || ticket.answer}`;
+            const text = `Ticket ID: ${ticket.ticket_id || ticket.id || 'N/A'}\nPast Support Ticket - Issue: ${ticket.issue || ticket.description}\nResolution: ${ticket.resolution || ticket.answer}`;
             documents.push(new Document({
                 pageContent: text,
                 metadata: { type: 'support_ticket', id: ticket.ticket_id || ticket.id, source: filePath }

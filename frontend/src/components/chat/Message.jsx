@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { Button } from '../ui/Button.jsx';
+import { motion } from 'framer-motion';
 
 export function Message({ message, isUser }) {
   const copyToClipboard = () => {
@@ -8,9 +9,14 @@ export function Message({ message, isUser }) {
   };
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
+    <motion.div 
+      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+      className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}
+    >
       <div
-        className={`max-w-xs lg:max-w-md rounded-lg p-4 ${
+        className={`max-w-xs lg:max-w-md rounded-xl p-4 shadow-sm ${
           isUser
             ? 'bg-blue-600 text-white'
             : 'bg-gray-200 dark:bg-slate-800 text-gray-900 dark:text-gray-100'
@@ -67,18 +73,9 @@ export function Message({ message, isUser }) {
             >
               Copy
             </Button>
-            {message.sources?.length > 0 && (
-              <Button
-                size="sm"
-                variant="ghost"
-                className="text-xs"
-              >
-                Sources ({message.sources.length})
-              </Button>
-            )}
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }

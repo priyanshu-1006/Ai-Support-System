@@ -17,6 +17,7 @@ import { UsersPage } from './pages/admin/UsersPage.jsx';
 // Components
 import { ProtectedRoute, AdminRoute, GuestRoute } from './components/ProtectedRoute.jsx';
 import { AppLayout } from './layouts/AppLayout.jsx';
+import { ParticlesBackground } from './components/ui/ParticlesBackground.jsx';
 
 // Create Query Client
 const queryClient = new QueryClient({
@@ -34,6 +35,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Router>
           <AuthProvider>
+            <ParticlesBackground />
             <Routes>
               {/* Auth Routes */}
               <Route

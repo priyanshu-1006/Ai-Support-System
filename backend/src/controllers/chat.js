@@ -127,3 +127,27 @@ export const sendMessage = async (req, res) => {
         res.status(500).json({ error: 'Failed to send message' });
     }
 };
+
+export const deleteConversation = async (req, res) => {
+    try {
+        const { conversationId } = req.params;
+        const userId = req.user.id;
+
+        const conversation = await prisma.conversation.findFirst({
+            where: { id: conversationId, userId }
+        });
+
+        if (!conversation) {
+            return res.status(404).json({ error: 'Conversation not found' });
+        }
+
+        await prisma.conversation.delete({
+            where: { id: conversationId }
+        });
+
+        res.json({ success: true, message: 'Conversation deleted' });
+    } catch (error) {
+        console.error('Error deleting conversation:', error);
+        res.status(500).json({ error: 'Failed to delete conversation' });
+    }
+};

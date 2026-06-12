@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { adminAPI } from '../../api/endpoints.js';
+import { documentAPI } from '../../api/endpoints.js';
 import { Button } from '../ui/Button.jsx';
 import { Input } from '../ui/Input.jsx';
 import { Card, CardBody, CardHeader } from '../ui/Card.jsx';
@@ -14,12 +14,12 @@ export function DocumentsManager() {
 
   const { data: documents = [], isLoading, error } = useQuery({
     queryKey: ['documents', search, status],
-    queryFn: () => adminAPI.listDocuments(20, 0, status, search),
+    queryFn: () => documentAPI.list(20, 0, status, search),
     select: (response) => response.data.data?.documents || [],
   });
 
   const deleteDoc = useMutation({
-    mutationFn: (docId) => adminAPI.deleteDocument(docId),
+    mutationFn: (docId) => documentAPI.delete(docId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['documents'] });
     },

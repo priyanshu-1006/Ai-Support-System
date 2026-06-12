@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth.js';
 import { Button } from '../components/ui/Button.jsx';
 import { Input } from '../components/ui/Input.jsx';
 import { Alert } from '../components/ui/Alert.jsx';
+import { Card, CardBody } from '../components/ui/Card.jsx';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Network, Database, Users } from 'lucide-react';
 
@@ -78,113 +79,102 @@ export function SignupPage() {
   };
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen flex w-full bg-white">
+    <div className="min-h-screen flex w-full bg-transparent transition-colors">
       {/* Left side - Signup Form */}
       <div className="w-full lg:w-1/2 flex flex-col justify-center p-8 sm:p-12 lg:p-24 relative overflow-y-auto">
         <div className="absolute top-8 left-8 flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
             <span className="text-white font-bold text-xl">G</span>
           </div>
-          <span className="font-bold text-xl tracking-tight text-gray-900">GAISS</span>
+          <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white">GAISS</span>
         </div>
         
-        <div className="w-full max-w-md mx-auto space-y-6 mt-12 mb-8">
-          <div>
-            <h1 className="text-4xl font-bold tracking-tight text-gray-900">Create Account</h1>
-            <p className="text-gray-500 mt-2 text-lg">
-=======
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-950 transition-colors">
-      <Card className="w-full max-w-md">
-        <CardBody>
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Account</h1>
-            <p className="text-gray-600 dark:text-gray-400 mt-2">
->>>>>>> 30356ca85fc028bc0f50e1b4c9a0ba3518b2e120
-              Join us to start using AI support
-            </p>
-          </div>
+        <div className="w-full max-w-md mx-auto mt-12 mb-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <Card className="glass-panel border-white/40 dark:border-slate-700/50 shadow-2xl">
+              <CardBody className="p-8">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Create Account</h1>
+                  <p className="text-gray-500 dark:text-gray-400 mt-2 text-lg">
+                    Join us to start using AI support
+                  </p>
+                </div>
 
-          {(error || formError) && (
-            <Alert
-              type="error"
-              message={error || formError}
-              onClose={() => setFormError(null)}
-            />
-          )}
+                {(error || formError) && (
+                  <Alert
+                    type="error"
+                    message={error || formError}
+                    onClose={() => setFormError(null)}
+                  />
+                )}
 
-          <form onSubmit={handleSubmit} className="space-y-5 mt-8">
-            <Input
-              label="Full Name"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="John Doe"
-              required
-            />
+                <form onSubmit={handleSubmit} className="space-y-5 mt-8">
+                  <Input
+                    label="Full Name"
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    placeholder="John Doe"
+                    required
+                  />
 
-            <Input
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="your@email.com"
-              required
-            />
+                  <Input
+                    label="Email"
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    placeholder="your@email.com"
+                    required
+                  />
 
-            <Input
-              label="Password"
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+                  <Input
+                    label="Password"
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    required
+                  />
 
-            <Input
-              label="Confirm Password"
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              placeholder="••••••••"
-              required
-            />
+                  <Input
+                    label="Confirm Password"
+                    type="password"
+                    name="confirmPassword"
+                    value={formData.confirmPassword}
+                    onChange={handleChange}
+                    placeholder="••••••••"
+                    required
+                  />
 
-            <Button
-              type="submit"
-              className="w-full h-11 text-base font-medium shadow-sm hover:shadow-md transition-all mt-4"
-              disabled={loading}
-            >
-              {loading ? 'Creating account...' : 'Create Account'}
-            </Button>
-          </form>
+                  <Button
+                    type="submit"
+                    className="w-full h-11 text-base font-medium shadow-md hover:shadow-lg transition-all mt-6 bg-gradient-to-r from-blue-600 to-indigo-600 border-0"
+                    disabled={loading}
+                  >
+                    {loading ? 'Creating account...' : 'Create Account'}
+                  </Button>
+                </form>
 
-<<<<<<< HEAD
-          <p className="text-center text-gray-600 mt-8">
-            Already have an account?{' '}
-            <Link
-              to="/login"
-              className="text-blue-600 hover:text-blue-700 font-semibold transition-colors"
-=======
-          <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
-            Already have an account?{' '}
-            <Link
-              to="/login"
-              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
->>>>>>> 30356ca85fc028bc0f50e1b4c9a0ba3518b2e120
-            >
-              Sign in
-            </Link>
-          </p>
+                <p className="text-center text-gray-600 dark:text-gray-400 mt-8">
+                  Already have an account?{' '}
+                  <Link
+                    to="/login"
+                    className="text-blue-600 hover:text-blue-700 dark:text-blue-400 font-semibold transition-colors"
+                  >
+                    Sign in
+                  </Link>
+                </p>
+              </CardBody>
+            </Card>
+          </motion.div>
         </div>
       </div>
 
       {/* Right side - Carousel Showcase */}
-      <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-gray-900">
+      <div className="hidden lg:flex w-1/2 relative overflow-hidden bg-slate-900 rounded-l-3xl shadow-2xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
@@ -194,8 +184,7 @@ export function SignupPage() {
             transition={{ duration: 0.8, ease: "easeInOut" }}
             className={`absolute inset-0 bg-gradient-to-br ${carouselSlides[currentSlide].gradient} flex flex-col items-center justify-center p-16 text-center`}
           >
-            {/* Decorative background elements */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
             
             <motion.div 
               initial={{ y: 20, opacity: 0 }}
@@ -207,20 +196,19 @@ export function SignupPage() {
               <h2 className="text-4xl font-bold text-white mb-6">
                 {carouselSlides[currentSlide].title}
               </h2>
-              <p className="text-xl text-white/80 leading-relaxed">
+              <p className="text-xl text-white/90 leading-relaxed">
                 {carouselSlides[currentSlide].description}
               </p>
             </motion.div>
           </motion.div>
         </AnimatePresence>
 
-        {/* Carousel Indicators */}
         <div className="absolute bottom-12 left-0 right-0 flex justify-center gap-3 z-20">
           {carouselSlides.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentSlide(index)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
+              className={`h-2.5 rounded-full transition-all duration-300 shadow-sm ${
                 index === currentSlide ? "w-8 bg-white" : "w-2.5 bg-white/40 hover:bg-white/60"
               }`}
               aria-label={`Go to slide ${index + 1}`}

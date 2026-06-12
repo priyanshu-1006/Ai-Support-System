@@ -15,6 +15,8 @@ app.use(express.json());
 
 import authRoutes from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
+import adminRoutes from './routes/admin.js';
+import documentsRoutes from './routes/documents.js';
 
 // Basic Route
 app.get('/', (req, res) => {
@@ -24,6 +26,8 @@ app.get('/', (req, res) => {
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/documents', documentsRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

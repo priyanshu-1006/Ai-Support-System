@@ -22,8 +22,8 @@ export function ChatInput({ onSend, isLoading, placeholder = 'Type your message.
   };
 
   return (
-    <form onSubmit={handleSend} className="border-t border-gray-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-950 transition-colors">
-      <div className="flex gap-3">
+    <div className="p-4 glass-panel border-x-0 border-b-0 sticky bottom-0">
+      <form onSubmit={handleSend} className="flex gap-3 max-w-4xl mx-auto w-full">
         <textarea
           ref={textareaRef}
           value={message}
@@ -41,7 +41,7 @@ export function ChatInput({ onSend, isLoading, placeholder = 'Type your message.
         >
           {isLoading ? 'Sending...' : 'Send'}
         </Button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }

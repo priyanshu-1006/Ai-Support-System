@@ -1,8 +1,6 @@
 export function Card({ children, className = '' }) {
   return (
-    <div
-      className={`bg-white dark:bg-slate-900 rounded-lg shadow-md border border-gray-200 dark:border-slate-800 transition-colors ${className}`}
-    >
+    <div className={`glass-panel rounded-xl overflow-hidden transition-colors ${className}`}>
       {children}
     </div>
   );
