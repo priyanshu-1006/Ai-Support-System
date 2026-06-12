@@ -37,7 +37,7 @@ export function ChatPage() {
   }, [conversation, conversationId]);
 
   const handleSendMessage = (message) => {
-    if (!conversationId) return;
+    const targetConvId = conversationId || 'new';
 
     const userMessage = {
       id: `temp-${Date.now()}`,
@@ -50,17 +50,23 @@ export function ChatPage() {
 
     sendMessage(
       {
-        conversationId,
+        conversationId: targetConvId,
         message,
         stream: true,
       },
       {
         onSuccess: (response) => {
           const assistantMessage = response.data.data;
-          setCurrentMessages((prev) => [
-            ...prev.filter((m) => !m.id.startsWith('temp-')),
-            assistantMessage,
-          ]);
+          
+          if (!conversationId && assistantMessage.convId) {
+            // Redirect to the newly created conversation
+            navigate(`/chat/${assistantMessage.convId}`);
+          } else {
+            setCurrentMessages((prev) => [
+              ...prev.filter((m) => !m.id.startsWith('temp-')),
+              assistantMessage,
+            ]);
+          }
         },
       }
     );

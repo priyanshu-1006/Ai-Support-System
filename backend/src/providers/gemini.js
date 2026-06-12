@@ -1,16 +1,17 @@
-import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { ChatGroq } from '@langchain/groq';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 /**
- * Get configured Gemini LLM for the RAG chain.
- * Make sure GOOGLE_API_KEY is in your environment variables.
+ * Get configured LLM for the RAG chain.
+ * Using Groq because GROQ_API_KEY is available.
  */
 export function getGeminiLLM() {
-    return new ChatGoogleGenerativeAI({
-        modelName: "gemini-2.5-flash", // Use gemini-2.5-flash for faster responses as per PRD
-        maxOutputTokens: 2048,
-        temperature: 0.2, // Low temperature for more factual RAG responses
+    return new ChatGroq({
+        model: "llama-3.1-8b-instant",
+        modelName: "llama-3.1-8b-instant", // Passing both for Langchain compatibility
+        apiKey: process.env.GROQ_API_KEY,
+        temperature: 0.2,
     });
 }
