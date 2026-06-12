@@ -22,7 +22,7 @@ export function ChatInput({ onSend, isLoading, placeholder = 'Type your message.
   };
 
   return (
-    <form onSubmit={handleSend} className="border-t border-gray-200 p-4">
+    <form onSubmit={handleSend} className="border-t border-gray-200 dark:border-slate-800 p-4 bg-white dark:bg-slate-950 transition-colors">
       <div className="flex gap-3">
         <textarea
           ref={textareaRef}
@@ -30,7 +30,7 @@ export function ChatInput({ onSend, isLoading, placeholder = 'Type your message.
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="flex-1 border border-gray-300 rounded-lg p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 bg-white dark:bg-slate-900 border border-gray-300 dark:border-slate-700 text-gray-900 dark:text-white rounded-lg p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
           rows={3}
           disabled={isLoading}
         />

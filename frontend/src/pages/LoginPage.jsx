@@ -30,12 +30,12 @@ export function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-950 transition-colors">
       <Card className="w-full max-w-md">
         <CardBody>
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
               Sign in to your account to continue
             </p>
           </div>
@@ -78,11 +78,11 @@ export function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-center text-gray-600 mt-6">
+          <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
             Don't have an account?{' '}
             <Link
               to="/signup"
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
               Sign up
             </Link>

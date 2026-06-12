@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 import authRoutes from './routes/auth.js';
+import chatRoutes from './routes/chat.js';
 
 // Basic Route
 app.get('/', (req, res) => {
@@ -22,9 +23,7 @@ app.get('/', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
-
-// We can mount our RAG endpoints here later
-// app.post('/api/chat', chatController);
+app.use('/api/chat', chatRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

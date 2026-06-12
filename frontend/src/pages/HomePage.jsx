@@ -2,47 +2,22 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.js';
 import { Button } from '../components/ui/Button.jsx';
 import { Card, CardBody, CardHeader } from '../components/ui/Card.jsx';
+import { Bot, BookOpen, Zap } from 'lucide-react';
 
 export function HomePage() {
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
+  const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
-      {/* Navigation */}
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-blue-600">GAISS</h1>
-            <p className="text-sm text-gray-600">Gryork AI Support System</p>
-          </div>
-          <div className="flex items-center gap-4">
-            {user && (
-              <>
-                <span className="text-gray-700">Welcome, {user.name}</span>
-                <Button size="sm" variant="ghost" onClick={handleLogout}>
-                  Logout
-                </Button>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 transition-colors pt-12 pb-24">
+      <main className="max-w-7xl mx-auto px-4 md:px-8">
         {/* Hero Section */}
-        <Card className="mb-12 border-0 shadow-lg">
-          <CardBody className="py-12 text-center">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        <Card className="mb-12 border-0 shadow-xl dark:bg-slate-800/80 backdrop-blur-sm">
+          <CardBody className="py-16 text-center">
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6 tracking-tight">
               Welcome to AI Support
             </h2>
-            <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
               Ask anything about Gryork and get instant, accurate answers powered by
               AI. Our system learns from your knowledge base to provide contextual
               support.
@@ -50,47 +25,53 @@ export function HomePage() {
             <Button
               size="lg"
               onClick={() => navigate('/chat')}
-              className="inline-block"
+              className="inline-flex items-center gap-2 text-lg px-8 py-4"
             >
-              Start Chatting →
+              Start Chatting <Zap size={20} className="fill-current" />
             </Button>
           </CardBody>
         </Card>
 
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          <Card>
-            <CardBody>
-              <div className="text-3xl mb-4">🤖</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <Card className="hover:shadow-lg transition-shadow dark:bg-slate-800 dark:border-slate-700">
+            <CardBody className="flex flex-col items-center text-center p-8">
+              <div className="p-4 bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full mb-6">
+                <Bot size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 AI Powered
               </h3>
-              <p className="text-gray-600">
-                Powered by Gemini and Groq for fast, accurate responses
+              <p className="text-gray-600 dark:text-gray-400">
+                Powered by state-of-the-art LLMs for fast, accurate responses
               </p>
             </CardBody>
           </Card>
 
-          <Card>
-            <CardBody>
-              <div className="text-3xl mb-4">📚</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <Card className="hover:shadow-lg transition-shadow dark:bg-slate-800 dark:border-slate-700">
+            <CardBody className="flex flex-col items-center text-center p-8">
+              <div className="p-4 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 rounded-full mb-6">
+                <BookOpen size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 Knowledge Base
               </h3>
-              <p className="text-gray-600">
-                Answers based on your organization's documents and FAQs
+              <p className="text-gray-600 dark:text-gray-400">
+                Answers strictly based on your organization's documents and FAQs
               </p>
             </CardBody>
           </Card>
 
-          <Card>
-            <CardBody>
-              <div className="text-3xl mb-4">⚡</div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+          <Card className="hover:shadow-lg transition-shadow dark:bg-slate-800 dark:border-slate-700">
+            <CardBody className="flex flex-col items-center text-center p-8">
+              <div className="p-4 bg-yellow-100 dark:bg-yellow-900/50 text-yellow-600 dark:text-yellow-400 rounded-full mb-6">
+                <Zap size={32} />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
                 Instant Answers
               </h3>
-              <p className="text-gray-600">
-                Get responses in seconds, no waiting for human support
+              <p className="text-gray-600 dark:text-gray-400">
+                Get responses in seconds, no waiting in line for human support
               </p>
             </CardBody>
           </Card>
@@ -98,27 +79,27 @@ export function HomePage() {
 
         {/* Admin Section */}
         {user?.role === 'admin' || user?.role === 'super_admin' ? (
-          <Card className="bg-indigo-50 border-indigo-200">
-            <CardHeader className="bg-indigo-100">
-              <h3 className="text-lg font-semibold text-indigo-900">
-                Admin Panel
+          <Card className="bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-800/50">
+            <CardHeader className="bg-indigo-100 dark:bg-indigo-900/40 border-b border-indigo-200 dark:border-indigo-800/50">
+              <h3 className="text-lg font-semibold text-indigo-900 dark:text-indigo-300">
+                Admin Panel Quick Actions
               </h3>
             </CardHeader>
-            <CardBody className="flex gap-4">
+            <CardBody className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
-                variant="primary"
+                className="w-full sm:w-auto"
                 onClick={() => navigate('/admin/documents')}
               >
                 Manage Documents
               </Button>
               <Button
-                variant="primary"
+                className="w-full sm:w-auto"
                 onClick={() => navigate('/admin/analytics')}
               >
                 View Analytics
               </Button>
               <Button
-                variant="primary"
+                className="w-full sm:w-auto"
                 onClick={() => navigate('/admin/users')}
               >
                 Manage Users

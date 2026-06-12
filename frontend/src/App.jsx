@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { AuthProvider } from './contexts/AuthContext.jsx';
+import { ThemeProvider } from './contexts/ThemeContext.jsx';
 
 // Pages
 import { LoginPage } from './pages/LoginPage.jsx';
@@ -29,73 +30,75 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Router>
-        <AuthProvider>
-          <Routes>
-            {/* Auth Routes */}
-            <Route
-              path="/login"
-              element={
-                <GuestRoute>
-                  <LoginPage />
-                </GuestRoute>
-              }
-            />
-            <Route
-              path="/signup"
-              element={
-                <GuestRoute>
-                  <SignupPage />
-                </GuestRoute>
-              }
-            />
-
-            {/* Protected Routes */}
-            <Route
-              element={
-                <ProtectedRoute>
-                  <AppLayout />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="/" element={<HomePage />} />
-              <Route path="/chat" element={<ChatPage />} />
-              <Route path="/chat/:conversationId" element={<ChatPage />} />
-
-              {/* Admin Routes */}
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <QueryClientProvider client={queryClient}>
+        <Router>
+          <AuthProvider>
+            <Routes>
+              {/* Auth Routes */}
               <Route
-                path="/admin/documents"
+                path="/login"
                 element={
-                  <AdminRoute>
-                    <DocumentsPage />
-                  </AdminRoute>
+                  <GuestRoute>
+                    <LoginPage />
+                  </GuestRoute>
                 }
               />
               <Route
-                path="/admin/analytics"
+                path="/signup"
                 element={
-                  <AdminRoute>
-                    <AnalyticsPage />
-                  </AdminRoute>
+                  <GuestRoute>
+                    <SignupPage />
+                  </GuestRoute>
                 }
               />
-              <Route
-                path="/admin/users"
-                element={
-                  <AdminRoute>
-                    <UsersPage />
-                  </AdminRoute>
-                }
-              />
-            </Route>
 
-            {/* 404 Route */}
-            <Route path="*" element={<div>Page not found</div>} />
-          </Routes>
-        </AuthProvider>
-      </Router>
-    </QueryClientProvider>
+              {/* Protected Routes */}
+              <Route
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="/" element={<HomePage />} />
+                <Route path="/chat" element={<ChatPage />} />
+                <Route path="/chat/:conversationId" element={<ChatPage />} />
+
+                {/* Admin Routes */}
+                <Route
+                  path="/admin/documents"
+                  element={
+                    <AdminRoute>
+                      <DocumentsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/analytics"
+                  element={
+                    <AdminRoute>
+                      <AnalyticsPage />
+                    </AdminRoute>
+                  }
+                />
+                <Route
+                  path="/admin/users"
+                  element={
+                    <AdminRoute>
+                      <UsersPage />
+                    </AdminRoute>
+                  }
+                />
+              </Route>
+
+              {/* 404 Route */}
+              <Route path="*" element={<div>Page not found</div>} />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

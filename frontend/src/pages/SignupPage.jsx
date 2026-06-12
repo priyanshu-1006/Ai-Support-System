@@ -45,12 +45,12 @@ export function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-slate-950 transition-colors">
       <Card className="w-full max-w-md">
         <CardBody>
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Create Account</h1>
-            <p className="text-gray-600 mt-2">
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Create Account</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-2">
               Join us to start using AI support
             </p>
           </div>
@@ -113,11 +113,11 @@ export function SignupPage() {
             </Button>
           </form>
 
-          <p className="text-center text-gray-600 mt-6">
+          <p className="text-center text-gray-600 dark:text-gray-400 mt-6">
             Already have an account?{' '}
             <Link
               to="/login"
-              className="text-blue-600 hover:text-blue-700 font-medium"
+              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium"
             >
               Sign in
             </Link>
