@@ -40,7 +40,7 @@ export const config = {
   },
   
   // CORS
-  corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+  corsOrigin: process.env.CORS_ORIGIN || 'https://ai-support-system-rust.vercel.app',
   
   // File Upload
   fileUpload: {
